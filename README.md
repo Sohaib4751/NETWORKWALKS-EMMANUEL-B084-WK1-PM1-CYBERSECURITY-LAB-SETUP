@@ -1,3 +1,6 @@
+NETWORKWALKS-EMMANUEL-B084-WK1-PM1-CYBERSECURITY-LAB-SETUP
+
+The lab uses a dedicated VirtualBox NAT Network to support future virtual machines while maintaining internet access.
 🔐 Cybersecurity Lab Environment Setup — Week 1
 
 📌 Project Overview
