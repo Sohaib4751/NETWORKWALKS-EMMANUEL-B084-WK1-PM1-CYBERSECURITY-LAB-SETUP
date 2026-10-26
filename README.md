@@ -1,166 +1,255 @@
-# NETWORKWALKS--EMMANUEL-B083-WK1-PM1-CYBERSECURITY-LAB-SETUP
-A hands-on cybersecurity lab built with Oracle VirtualBox and Kali Linux 2026.2, featuring NAT Network configuration, static IP addressing, DNS and gateway setup, connectivity testing, troubleshooting, and documented configurations.
-Cybersecurity Lab Environment Setup — Week 1
-
-A hands-on cybersecurity lab environment built using Oracle VirtualBox and Kali Linux 2026.2 as part of my cybersecurity learning journey with NETWORKWALKS.
-
-This project establishes an isolated virtual lab for future cybersecurity exercises, network analysis, security testing, and practical experimentation.
+🔐 Cybersecurity Lab Environment Setup — Week 1
 
 📌 Project Overview
 
-The objective of this project was to build, configure, test, and document a functional virtual cybersecurity lab. The setup includes a Kali Linux virtual machine, a dedicated VirtualBox NAT Network, static network configuration, and connectivity verification.
+This project documents the setup and configuration of a cybersecurity lab environment using Oracle VirtualBox and Kali Linux as part of my learning journey with NETWORKWALKS.
+
+The objective was to establish a virtual environment for networking practice, cybersecurity exercises, troubleshooting, and future security-testing activities.
+
+The lab uses a VirtualBox NAT Network named NatNetwork, with Kali Linux connected through a virtual Intel PRO/1000 MT Desktop network adapter.
 
 🛠️ Tools and Technologies
 
 Oracle VirtualBox — Virtualization platform
 
-Kali Linux 2026.2 — Security-focused Linux distribution
+Kali Linux 2025.3 — Security-focused Linux distribution
 
-NAT Network — Virtual networking and network connectivity
+NAT Network — Virtual networking
 
-Linux Networking Utilities — Network configuration and troubleshooting
+NetworkManager — Linux network configuration management
+
+Linux Networking Utilities — IP addressing, routing, and DNS verification
 
 GitHub — Project documentation and version control
 
-🎯 Objectives
-
-Install and configure Oracle VirtualBox.
-
-Import and configure the Kali Linux virtual machine.
-
-Create a dedicated NAT Network.
-
-Configure static IP addressing.
-
-Set up and verify the network gateway and DNS settings.
-
-Test connectivity and troubleshoot networking issues.
-
-Document the setup with screenshots and configuration details.
-
 ⚙️ Lab Configuration
-
-The lab was configured with the following components:
 
 Component
 
-Configuration
+Actual Configuration
 
-Virtualization
+Virtualization Platform
 
 Oracle VirtualBox
 
-Operating System
+Virtual Machine
 
-Kali Linux 2026.2
+kali-linux-2025.3-virtualbox-amd64
 
-Network Mode
+Network Adapter
 
-Dedicated NAT Network
+Intel PRO/1000 MT Desktop (82540EM)
 
-IP Configuration
+Adapter Interface
 
-Static IP addressing
+eth0
 
-Gateway
+Network Attachment
 
-Configured for the lab network
+NAT Network
 
-DNS
+NAT Network Name
 
-Configured and tested
+NatNetwork
 
-Verification
+Virtual Cable
 
-Connectivity testing and troubleshooting
+Connected
 
-Note: Refer to the screenshots and configuration evidence in this repository for the actual IP addresses, subnet, gateway, and DNS values used in the lab.
+IPv4 Address
 
-🚀 Implementation Steps
+10.0.2.3
 
-1. Install Oracle VirtualBox
+Subnet
 
-Installed and configured Oracle VirtualBox to create and manage virtual machines for cybersecurity practice.
+10.0.2.0/24
 
-2. Import Kali Linux
+Default Gateway
 
-Imported the Kali Linux 2026.2 virtual machine and verified that the system booted successfully.
+10.0.2.1
 
-3. Configure the NAT Network
+DNS Server
 
-Created a dedicated NAT Network in VirtualBox to provide network connectivity to the lab environment.
+192.168.18.1
 
-4. Configure Static IP Addressing
+IP Assignment
 
-Configured static network settings for Kali Linux, including the IP address, subnet, gateway, and DNS configuration.
+DHCP (dynamic)
 
-5. Verify Connectivity
+Note: The NAT Network's IPv4 prefix and DHCP server settings in VirtualBox Network Manager have not yet been independently verified.
 
-Performed network connectivity checks to validate the configuration and identify potential issues with routing and name resolution.
+🖥️ Lab Setup and Configuration
 
-6. Troubleshoot Networking Issues
+Step 1 — Configure the Virtual Machine
 
-Investigated and resolved networking issues encountered during configuration, including compatibility-related behavior associated with newer Kali Linux versions.
+Kali Linux was imported into Oracle VirtualBox and prepared for networking and cybersecurity exercises.
 
-7. Document the Lab
+The virtual machine's network adapter was configured with the following settings:
 
-Captured screenshots and documented the configuration, implementation process, and verification steps for future reference.
+Attached to: NAT Network
+
+Network name: NatNetwork
+
+Adapter type: Intel PRO/1000 MT Desktop (82540EM)
+
+Virtual cable connected: Enabled
+
+Screenshot: VirtualBox network adapter configuration.
+
+
+
+Step 2 — Configure the NAT Network Adapter
+
+The Kali Linux virtual machine was connected to the dedicated NAT Network named NatNetwork.
+
+This configuration establishes the virtual machine's network attachment. The NAT Network's own address range and DHCP configuration should be verified separately in VirtualBox Network Manager.
+
+Screenshot: NAT Network adapter settings.
+
+
+
+Step 3 — Verify the Kali Linux Environment
+
+Kali Linux successfully booted into its graphical desktop environment, providing access to the terminal and networking utilities required for the lab.
+
+Screenshot: Kali Linux desktop environment.
+
+
+
+Step 4 — Inspect the IPv4 Configuration
+
+The following command was used to inspect the virtual machine's IPv4 addresses:
+
+ip -4 addr
+
+The active network interface reported:
+
+Interface: eth0
+IPv4 Address: 10.0.2.3/24
+Broadcast: 10.0.2.255
+Assignment: Dynamic
+
+The eth0 interface was active and had an IPv4 address assigned through DHCP.
+
+Step 5 — Inspect the Routing Table
+
+The routing table was examined using:
+
+ip route
+
+Observed routing configuration:
+
+default via 10.0.2.1 dev eth0 proto dhcp src 10.0.2.3 metric 100
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.3 metric 100
+
+This confirms that:
+
+The default gateway is 10.0.2.1.
+
+The directly connected IPv4 subnet is 10.0.2.0/24.
+
+The assigned source address is 10.0.2.3.
+
+The default route was learned through DHCP.
+
+Step 6 — Inspect DNS Configuration
+
+DNS settings were inspected using:
+
+cat /etc/resolv.conf
+
+Observed configuration:
+
+# Generated by NetworkManager
+nameserver 192.168.18.1
+
+The configured DNS server is 192.168.18.1, and the configuration file is managed by NetworkManager.
+
+This records the DNS server configured in Kali Linux. Successful DNS resolution should be verified separately with a hostname lookup.
+
+Step 7 — Verify NetworkManager Status
+
+The following command was used to inspect the active network connection:
+
+nmcli
+
+Observed connection details:
+
+eth0: connected to Wired connection 1
+ethernet (e1000), Intel 82540EM
+inet4 10.0.2.3/24
+route4 default via 10.0.2.1
+DNS: 192.168.18.1
+
+This confirms that NetworkManager reports eth0 as connected and recognizes the IPv4 address, default route, and DNS server.
+
+🧪 Network Verification Commands
+
+The following commands can be used for additional connectivity verification.
+
+Check the interface address:
+
+ip -4 addr show eth0
+
+Check the default route:
+
+ip route
+
+Test connectivity to the configured gateway:
+
+ping -c 4 10.0.2.1
+
+Test external IP connectivity:
+
+ping -c 4 8.8.8.8
+
+Test DNS resolution:
+
+getent hosts google.com
+
+These are recommended verification commands. Their results should be recorded after they have actually been executed.
 
 🧠 Key Learnings
 
-Through this project, I strengthened my practical understanding of:
+This project provided practical experience with:
 
-Virtualization and virtual machine management
+Virtual machine configuration in Oracle VirtualBox.
 
-VirtualBox NAT Network architecture
+Virtual network adapter configuration.
 
-IP addressing and subnet configuration
+NAT Network concepts.
 
-Static network configuration in Linux
+IPv4 addressing and subnet notation.
 
-Default gateways and DNS resolution
+Default gateways and routing tables.
 
-Network connectivity testing
+DHCP-based network configuration.
 
-Linux network troubleshooting
+DNS configuration and name resolution.
 
-Technical documentation and evidence collection
+NetworkManager and Linux networking utilities.
 
-📸 Screenshots and Documentation
+Technical documentation and screenshot-based evidence.
 
-Screenshots documenting the lab setup, network configuration, and connectivity verification are included in this repository.
+🚀 Future Improvements
 
-Browse the repository files to review the implementation and supporting evidence.
+Verify the NAT Network's IPv4 prefix and DHCP configuration.
 
-🔐 Security Considerations
+Complete and verify static IP configuration if required by the project.
 
-Use an isolated lab environment for authorized security testing.
+Test gateway connectivity, external connectivity, and DNS resolution.
 
-Understand the difference between a NAT Network and other VirtualBox networking modes.
+Add additional virtual machines for network communication exercises.
 
-Verify network connectivity and exposure before introducing additional lab machines or security-testing tools.
+Practice network scanning with Nmap.
 
-Perform testing only on systems and networks you own or have explicit permission to assess.
+Analyse traffic using Wireshark.
 
-🔮 Future Improvements
+Develop isolated penetration-testing and defensive security labs.
 
-Potential next steps for expanding this lab include:
+⚠️ Ethical Use
 
-Adding additional virtual machines for client-server communication.
-
-Practicing network scanning and traffic analysis with Nmap and Wireshark.
-
-Exploring firewall rules and network segmentation.
-
-Building hands-on penetration-testing and defensive security exercises.
-
-Documenting additional lab scenarios and troubleshooting procedures.
-
-🙏 Acknowledgements
-
-Thank you to NETWORKWALKS and my instructor, Waqas Karim, CCIE, for the guidance and hands-on learning experience.
-
-This project marks the first step in building a practical cybersecurity lab for continued learning and experimentation.
+This lab is intended for educational purposes and authorized cybersecurity practice. Security testing should only be conducted on systems and networks that I own or have explicit permission to assess.
 
 👨‍💻 Author
 
@@ -168,4 +257,4 @@ Muhammad Sohaib
 
 Cybersecurity | Networking | Security Labs
 
-Week 1 Project — Cybersecurity Lab Environment Setup
+Week 1 — Cybersecurity Lab Environment Setup
